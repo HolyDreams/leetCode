@@ -19,21 +19,28 @@ namespace leetCode.questions
             string result = "";
             for (int i = 0; i < s.Length; i++)
             {
-                if (result.Length > s.Length - i)
-                    return result;
-                for (int j = s.Length; j > i; j--)
+                var subRes = sub(s, i, i);
+                if (subRes.Length > result.Length)
                 {
-                    if (s[j - 1] != s[i])
-                        continue;
-                    else if (j - i <= result.Length)
-                        break;
-                    var text = s.Substring(i).Remove(j - i).ToString();
-                    var textRevers = new String(text.Reverse().ToArray());
-                    if (text == textRevers && text.Length > result.Length)
-                        result = text;
+                    result = subRes;
+                }
+
+                subRes = sub(s, i, i + 1);
+                if (subRes.Length > result.Length)
+                {
+                    result = subRes;
                 }
             }
             return result;
+        }
+        private static string sub(string s, int left, int right)
+        {
+            while (left >= 0 && right < s.Length && s[left] == s[right])
+            {
+                left--;
+                right++;
+            }
+            return s.Substring(left + 1, right - left - 1);
         }
     }
 }
