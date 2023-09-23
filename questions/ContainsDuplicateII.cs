@@ -15,6 +15,19 @@ namespace leetCode.questions
          */
         public static bool ContainsNearbyDuplicate(int[] nums, int k)
         {
+            var hash = new Dictionary<int, int>();
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (!hash.ContainsKey(nums[i]))
+                    hash.Add(nums[i], i);
+                else
+                {
+                    if (Math.Abs(nums[i] - i) <= k)
+                        return true;
+
+                    hash[nums[i]] = i;
+                }
+            }
             return false;
         }
     }
